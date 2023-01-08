@@ -1,0 +1,2 @@
+// it's comment.
+// line like: " //comment " is not a comment. Comment symbols have to be separated with comment content

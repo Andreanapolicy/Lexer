@@ -63,6 +63,8 @@ namespace
     bool checkNumber(const std::string& data)
     {
         bool isFloat = false;
+        bool isNotRegularNotation = false;
+
         if (data.empty())
         {
             return false;
@@ -71,6 +73,11 @@ namespace
         for (auto index = 0; index < data.size(); index++)
         {
             if (std::isdigit(data[index]))
+            {
+                continue;
+            }
+
+            if (isNotRegularNotation && std::isalpha(data[index]))
             {
                 continue;
             }
@@ -88,6 +95,7 @@ namespace
 
             if (data.size() > 2 && index == 1 && data[0] == '0' && (data[1] == 'x' || data[1] == 'b' || data[1] == 'e'))
             {
+				isNotRegularNotation = true;
                 continue;
             }
 
