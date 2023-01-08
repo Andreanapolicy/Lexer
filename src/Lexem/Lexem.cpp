@@ -90,6 +90,11 @@ namespace
 
         return true;
     }
+
+    bool checkComment(const std::string& data)
+    {
+		return data == "//";
+    }
 }
 
 namespace lexem
@@ -107,6 +112,7 @@ namespace lexem
 		{LexemType::MULTIPLICATION, checkMultiplication},
 		{LexemType::DIVISION, checkDivision},
 		{LexemType::STRING, checkString},
+		{LexemType::COMMENT, checkComment},
     };
 
     LexemType GetLexemType(const std::string& data)

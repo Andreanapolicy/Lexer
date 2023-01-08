@@ -15,7 +15,8 @@ namespace lexem
         DIVISION,
         ASSIGNMENT,
         STRING,
-        ERROR
+        ERROR,
+		COMMENT
     };
 
     LexemType GetLexemType(const std::string& data);

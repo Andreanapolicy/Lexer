@@ -49,24 +49,30 @@ namespace lexer
             std::istringstream iss(line);
 
             std::string data;
-            while (iss >> data)
-            {
-				if (iss.tellg() == -1)
+			try
+			{
+				while (iss >> data)
 				{
-					m_position.column = line.size() - data.size();
+					if (iss.tellg() == -1)
+					{
+						m_position.column = line.size() - data.size();
+					}
+					else
+					{
+						m_position.column = static_cast<int>(iss.tellg()) - data.size();
+					}
+					if (data[data.size() - 1] == ';')
+					{
+						AddNewToken(data.substr(0, data.size() - 1));
+						m_position.column += data.size() - 1;
+						data = data.substr(data.size() - 1, 1);
+					}
+					AddNewToken(data);
 				}
-				else
-				{
-					m_position.column = static_cast<int>(iss.tellg()) - data.size();
-				}
-                if (data[data.size() - 1] == ';')
-                {
-                    AddNewToken(data.substr(0, data.size() - 1));
-					m_position.column += data.size() - 1;
-					data = data.substr(data.size() - 1, 1);
-				}
-                AddNewToken(data);
-            }
+			}
+			catch (const std::logic_error& exception)
+			{
+			}
         }
     }
 
@@ -82,6 +88,10 @@ namespace lexer
         {
             throw std::runtime_error("Error, wrong lexem at pos(" + std::to_string(m_position.row) + ", " + std::to_string(m_position.column) + "); [..." + data + "...]");
         }
+		if (newLexemType == lexem::LexemType::COMMENT)
+		{
+			throw std::logic_error("Comment is not required");
+		}
 
         m_tokens.emplace_back(token::Token(GetTokenType(newLexemType), m_position, data));
     }
