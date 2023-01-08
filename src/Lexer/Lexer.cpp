@@ -52,6 +52,11 @@ namespace lexer
             while (iss >> data)
             {
                 m_position.column = line.find(data);
+                if (data[data.size() - 1] == ';')
+                {
+                    AddNewToken(data.substr(0, data.size() - 1));
+                    data = data.substr(data.size() - 1, 1);
+                }
                 AddNewToken(data);
             }
         }

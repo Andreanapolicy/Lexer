@@ -57,6 +57,11 @@ namespace
     bool checkNumber(const std::string& data)
     {
         bool isFloat = false;
+        if (data.empty())
+        {
+            return false;
+        }
+
         for (auto index = 0; index < data.size(); index++)
         {
             if (std::isdigit(data[index]))
@@ -94,13 +99,13 @@ namespace lexem
     const std::map<LexemType, Handler> associations = {
             {LexemType::IDENTIFIER, checkIdentifier},
             {LexemType::KEYWORD, checkKeyword},
+            {LexemType::ASSIGNMENT, checkAssigment},
             {LexemType::NUMBER, checkNumber},
             {LexemType::SEPARATOR, checkSeparator},
             {LexemType::PLUS, checkPlus},
             {LexemType::MINUS, checkMinus},
             {LexemType::MULTIPLICATION, checkMultiplication},
             {LexemType::DIVISION, checkDivision},
-            {LexemType::ASSIGNMENT, checkAssigment},
             {LexemType::STRING, checkString},
     };
 
