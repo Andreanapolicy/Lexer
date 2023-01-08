@@ -18,5 +18,6 @@ namespace token::type
         DIVISION,
         ASSIGNMENT,
         STRING,
+        END,
     };
 }

@@ -1,5 +1,7 @@
 #include <fstream>
 #include <iostream>
+#include <memory>
+#include "src/Lexer/Lexer.h"
 
 namespace
 {
@@ -32,8 +34,15 @@ int main(int argc, char** argv)
 		{
 			throw std::runtime_error("Cannot open input file");
 		}
+
+        auto pLexer = std::make_unique<lexer::Lexer>(input);
+        while (pLexer->GetToken().GetType() != token::type::TokenType::END)
+        {
+        }
+
+        pLexer->OutAllTokens(std::cout);
 	}
-	catch (std::exception const& e)
+	catch (const std::exception& e)
 	{
 		std::cerr << e.what() << std::endl;
 		return EXIT_FAILURE;
