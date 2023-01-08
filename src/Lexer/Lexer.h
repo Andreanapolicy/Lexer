@@ -12,12 +12,14 @@ namespace lexer
     public:
         explicit Lexer(std::istream& input);
 
-        token::Token GetToken();
+        void Process();
 
         void OutAllTokens(std::ostream& output);
     private:
+        void AddNewToken(const std::string& data);
+
         std::istream& m_input;
         Position m_position;
-        std::vector<token::Token> tokens;
+        std::vector<token::Token> m_tokens;
     };
 }

@@ -1,9 +1,75 @@
 #include "Lexer.h"
+#include "../Lexem/Lexem.h"
+
+namespace
+{
+    token::type::TokenType GetTokenType(const lexem::LexemType lexemType)
+    {
+        switch (lexemType)
+        {
+            case lexem::LexemType::KEYWORD:
+                return token::type::TokenType::KEYWORD;
+            case lexem::LexemType::IDENTIFIER:
+                return token::type::TokenType::IDENTIFIER;
+            case lexem::LexemType::ASSIGNMENT:
+                return token::type::TokenType::ASSIGNMENT;
+            case lexem::LexemType::NUMBER:
+                return token::type::TokenType::NUMBER;
+            case lexem::LexemType::SEPARATOR:
+                return token::type::TokenType::SEPARATOR;
+            case lexem::LexemType::STRING:
+                return token::type::TokenType::STRING;
+            case lexem::LexemType::PLUS:
+                return token::type::TokenType::PLUS;
+            case lexem::LexemType::MINUS:
+                return token::type::TokenType::MINUS;
+            case lexem::LexemType::MULTIPLICATION:
+                return token::type::TokenType::MULTIPLICATION;
+            case lexem::LexemType::DIVISION:
+                return token::type::TokenType::DIVISION;
+            default:
+                throw std::runtime_error("Error, cannot associate lexem type to token type");
+        }
+    }
+}
 
 namespace lexer
 {
     Lexer::Lexer(std::istream& input)
     : m_input(input)
     {
+    }
+
+    void Lexer::Process()
+    {
+        std::string line;
+        while (std::getline(m_input, line))
+        {
+            m_position.row++;
+            std::istringstream iss(line);
+
+            std::string data;
+            while (iss >> data)
+            {
+                m_position.column = line.find(data);
+                AddNewToken(data);
+            }
+        }
+    }
+
+    void Lexer::OutAllTokens(std::ostream& output)
+    {
+
+    }
+
+    void Lexer::AddNewToken(const std::string& data)
+    {
+        auto newLexemType = lexem::GetLexemType(data);
+        if (newLexemType == lexem::LexemType::ERROR)
+        {
+            throw std::runtime_error("Error, wrong lexem at pos(" + std::to_string(m_position.row) + ", " + std::to_string(m_position.column) + "); [..." + data + "...]");
+        }
+
+        m_tokens.emplace_back(token::Token(GetTokenType(newLexemType), m_position, data));
     }
 }

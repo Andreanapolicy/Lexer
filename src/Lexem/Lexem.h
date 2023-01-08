@@ -1,10 +1,9 @@
 #pragma once
-#include <map>
 #include <string>
 
-namespace token::type
+namespace lexem
 {
-    enum class TokenType
+    enum class LexemType
     {
         IDENTIFIER,
         KEYWORD,
@@ -16,6 +15,8 @@ namespace token::type
         DIVISION,
         ASSIGNMENT,
         STRING,
-        END,
+        ERROR
     };
+
+    LexemType GetLexemType(const std::string& data);
 }

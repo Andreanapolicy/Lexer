@@ -35,12 +35,10 @@ int main(int argc, char** argv)
 			throw std::runtime_error("Cannot open input file");
 		}
 
-        auto pLexer = std::make_unique<lexer::Lexer>(input);
-        while (pLexer->GetToken().GetType() != token::type::TokenType::END)
-        {
-        }
+        auto lexer = std::make_unique<lexer::Lexer>(input);
+        lexer->Process();
 
-        pLexer->OutAllTokens(std::cout);
+        lexer->OutAllTokens(std::cout);
 	}
 	catch (const std::exception& e)
 	{

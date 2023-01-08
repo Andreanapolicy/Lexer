@@ -4,7 +4,7 @@
 
 namespace token
 {
-    Token::Token(type::TokenType tokenType, size_t position, std::string data)
+    Token::Token(type::TokenType tokenType, Position position, std::string data)
             : m_tokenType(tokenType)
             , m_position(position)
             , m_data(std::move(data))
@@ -16,7 +16,7 @@ namespace token
         return m_tokenType;
     }
 
-    size_t Token::GetPos() const
+    Position Token::GetPosition() const
     {
         return m_position;
     }
