@@ -5,3 +5,7 @@ float b = "string";
 bFFF = 0xFF;
 b777 = 0e777;
 b101 = 0b010101;
+
+// also number could be float
+
+floatNumber = 1.231231;
