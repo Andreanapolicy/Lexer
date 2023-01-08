@@ -14,7 +14,7 @@ namespace lexer
 
         void Process();
 
-        void OutAllTokens(std::ostream& output);
+        std::vector<token::Token> GetAllTokens();
     private:
         void AddNewToken(const std::string& data);
 

@@ -62,9 +62,9 @@ namespace lexer
         }
     }
 
-    void Lexer::OutAllTokens(std::ostream& output)
+    std::vector<token::Token> Lexer::GetAllTokens()
     {
-
+        return m_tokens;
     }
 
     void Lexer::AddNewToken(const std::string& data)

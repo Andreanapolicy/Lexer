@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "src/Lexer/Lexer.h"
+#include "src/utils/LexerDialog/LexerDialog.h"
 
 namespace
 {
@@ -38,7 +39,8 @@ int main(int argc, char** argv)
         auto lexer = std::make_unique<lexer::Lexer>(input);
         lexer->Process();
 
-        lexer->OutAllTokens(std::cout);
+        auto lexerDialog = std::make_unique<LexerDialog>(std::cout);
+        lexerDialog->OutputTokens(lexer->GetAllTokens());
 	}
 	catch (const std::exception& e)
 	{

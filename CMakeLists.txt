@@ -14,4 +14,6 @@ add_executable(
         src/Lexer/Lexer.h
         src/Lexem/Lexem.h
         src/Lexem/Lexem.cpp
+        src/utils/LexerDialog/LexerDialog.cpp
+        src/utils/LexerDialog/LexerDialog.h
 )
