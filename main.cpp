@@ -21,7 +21,7 @@ Args ParseArgs(int argc, char** argv)
 		.inputFilename = argv[1]
 	};
 }
-} // namespace
+}
 
 int main(int argc, char** argv)
 {
