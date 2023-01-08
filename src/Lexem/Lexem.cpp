@@ -51,7 +51,13 @@ namespace
 
     bool checkSeparator(const std::string& data)
     {
-        return data == ";";
+        return data == ";"
+			|| data == "["
+			|| data == "]"
+			|| data == "("
+			|| data == ")"
+			|| data == "{"
+			|| data == "}";
     }
 
     bool checkNumber(const std::string& data)
