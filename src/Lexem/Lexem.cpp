@@ -97,16 +97,16 @@ namespace lexem
     using Handler = std::function<bool(const std::string&)>;
 
     const std::map<LexemType, Handler> associations = {
-            {LexemType::IDENTIFIER, checkIdentifier},
-            {LexemType::KEYWORD, checkKeyword},
-            {LexemType::ASSIGNMENT, checkAssigment},
-            {LexemType::NUMBER, checkNumber},
-            {LexemType::SEPARATOR, checkSeparator},
-            {LexemType::PLUS, checkPlus},
-            {LexemType::MINUS, checkMinus},
-            {LexemType::MULTIPLICATION, checkMultiplication},
-            {LexemType::DIVISION, checkDivision},
-            {LexemType::STRING, checkString},
+		{LexemType::KEYWORD, checkKeyword},
+		{LexemType::IDENTIFIER, checkIdentifier},
+		{LexemType::ASSIGNMENT, checkAssigment},
+		{LexemType::NUMBER, checkNumber},
+		{LexemType::SEPARATOR, checkSeparator},
+		{LexemType::PLUS, checkPlus},
+		{LexemType::MINUS, checkMinus},
+		{LexemType::MULTIPLICATION, checkMultiplication},
+		{LexemType::DIVISION, checkDivision},
+		{LexemType::STRING, checkString},
     };
 
     LexemType GetLexemType(const std::string& data)

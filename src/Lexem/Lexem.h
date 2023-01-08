@@ -5,8 +5,8 @@ namespace lexem
 {
     enum class LexemType
     {
-        IDENTIFIER,
-        KEYWORD,
+		KEYWORD,
+		IDENTIFIER,
         NUMBER,
         SEPARATOR,
         PLUS,

@@ -51,12 +51,20 @@ namespace lexer
             std::string data;
             while (iss >> data)
             {
-                m_position.column = line.find(data);
+				if (iss.tellg() == -1)
+				{
+					m_position.column = line.size() - data.size();
+				}
+				else
+				{
+					m_position.column = static_cast<int>(iss.tellg()) - data.size();
+				}
                 if (data[data.size() - 1] == ';')
                 {
                     AddNewToken(data.substr(0, data.size() - 1));
-                    data = data.substr(data.size() - 1, 1);
-                }
+					m_position.column += data.size() - 1;
+					data = data.substr(data.size() - 1, 1);
+				}
                 AddNewToken(data);
             }
         }
