@@ -51,7 +51,7 @@ TEST_CASE("Tests for single usage lexems")
 				input << "//this is a comment";
 				auto lexer = std::make_unique<lexer::Lexer>(input);
 
-				THEN("there will be expetion")
+				THEN("there will be exception")
 				{
 					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...//this...]");
 				}
@@ -251,6 +251,152 @@ TEST_CASE("Tests for single usage lexems")
 
 					lexerDialog->OutputTokens(lexer->GetAllTokens());
 					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+		}
+	}
+
+	SECTION("Testing values")
+	{
+		GIVEN("Lexer dialog, input and output")
+		{
+			std::stringstream input;
+			std::stringstream output;
+
+			auto lexerDialog = std::make_unique<LexerDialog>(output);
+
+			WHEN("In lexer goes 10 notation number")
+			{
+				input << "1234";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of number")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (1234) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes 16 notation number")
+			{
+				input << "0x12EDA34";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of number")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (0x12EDA34) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes 2 notation number")
+			{
+				input << "0b1010101";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of number")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (0b1010101) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes 8 notation number")
+			{
+				input << "0e1010101";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of number")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (0e1010101) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes string")
+			{
+				input << "\"string\"";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of string")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "string (\"string\") [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes 16 notation number with wrong value")
+			{
+				input << "0xGGG";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+
+				THEN("there will be exception")
+				{
+					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...0xGGG...]");
+				}
+			}
+
+			WHEN("In lexer goes 8 notation number with wrong value(letters)")
+			{
+				input << "0eGGG";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+
+				THEN("there will be exception")
+				{
+					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...0eGGG...]");
+				}
+			}
+
+			WHEN("In lexer goes 8 notation number with wrong value(digits)")
+			{
+				input << "0e123456789";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+
+				THEN("there will be exception")
+				{
+					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...0e123456789...]");
+				}
+			}
+
+			WHEN("In lexer goes 2 notation number with wrong value(digits)")
+			{
+				input << "0b1101023";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+
+				THEN("there will be exception")
+				{
+					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...0b1101023...]");
+				}
+			}
+
+			WHEN("In lexer goes 2 notation number with wrong value(letters)")
+			{
+				input << "0b1101023A";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+
+				THEN("there will be exception")
+				{
+					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...0b1101023A...]");
 				}
 			}
 		}
