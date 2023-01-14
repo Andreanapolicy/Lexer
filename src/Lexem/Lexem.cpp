@@ -75,7 +75,7 @@ namespace
         for (auto index = 0; index < data.size(); index++)
         {
             if ((isBinary && std::isdigit(data[index]) && data[index] <= '1')
-				|| (isOctal && std::isdigit(data[index]) && data[index] <= '7') || std::isdigit(data[index]))
+				|| (isOctal && std::isdigit(data[index]) && data[index] <= '7') || (!isBinary && !isOctal && std::isdigit(data[index])))
             {
                 continue;
             }
