@@ -64,6 +64,8 @@ namespace
     {
         bool isFloat = false;
 		bool isHexadecimal = false;
+		bool isOctal = false;
+		bool isBinary = false;
 
         if (data.empty())
         {
@@ -72,7 +74,8 @@ namespace
 
         for (auto index = 0; index < data.size(); index++)
         {
-            if (std::isdigit(data[index]))
+            if ((isBinary && std::isdigit(data[index]) && data[index] <= '1')
+				|| (isOctal && std::isdigit(data[index]) && data[index] <= '7') || std::isdigit(data[index]))
             {
                 continue;
             }
@@ -96,6 +99,8 @@ namespace
             if (data.size() > 2 && index == 1 && data[0] == '0' && (data[1] == 'x' || data[1] == 'b' || data[1] == 'e'))
             {
 				isHexadecimal = data[1] == 'x';
+				isOctal = data[1] == 'e';
+				isBinary = data[1] == 'b';
                 continue;
             }
 
