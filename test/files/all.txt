@@ -1,0 +1,14 @@
+a = ( a + 1 );
+b = "string";
+int a;
+float a;
+float a;
+b = a + ( b * a );
+{
+    a = ( a + 1 );
+    b = "string";
+    int a;
+    float a;
+    float a;
+    b = a + ( b * a );
+}

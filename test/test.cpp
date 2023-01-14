@@ -345,6 +345,22 @@ TEST_CASE("Tests for single usage lexems")
 				}
 			}
 
+			WHEN("In lexer goes float number")
+			{
+				input << "1.213132";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of number")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (1.213132) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
 			WHEN("In lexer goes 16 notation number with wrong value")
 			{
 				input << "0xGGG";
@@ -397,6 +413,17 @@ TEST_CASE("Tests for single usage lexems")
 				THEN("there will be exception")
 				{
 					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...0b1101023A...]");
+				}
+			}
+
+			WHEN("In lexer goes float number with 2 separators(1.232131.2313)")
+			{
+				input << "1.232131.2313";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+
+				THEN("there will be exception")
+				{
+					REQUIRE_THROWS_WITH(lexer->Process(), "Error, wrong lexem at pos(1, 0); [...1.232131.2313...]");
 				}
 			}
 		}
@@ -482,6 +509,34 @@ TEST_CASE("Tests for single usage lexems")
 					REQUIRE(output.str() == intendedOutput.str());
 				}
 			}
+		}
+	}
+}
+
+TEST_CASE("Tests for different cases")
+{
+	const std::string fileName = GENERATE("ids_and_assignments", "brackets", "all");
+	std::ifstream input;
+	input.open("../test/files/" + fileName + ".txt");
+	std::stringstream output;
+
+	auto lexerDialog = std::make_unique<LexerDialog>(output);
+
+	WHEN("In lexer goes file content")
+	{
+		auto lexer = std::make_unique<lexer::Lexer>(input);
+		lexer->Process();
+
+		THEN("List of token will be empty")
+		{
+			std::ifstream intendedOutput;
+			intendedOutput.open("../test/files/" + fileName + "-output.txt");
+			std::stringstream buffer;
+			buffer << intendedOutput.rdbuf();
+
+			lexerDialog->OutputTokens(lexer->GetAllTokens());
+
+			REQUIRE(output.str() == buffer.str());
 		}
 	}
 }
