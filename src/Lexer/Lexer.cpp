@@ -61,7 +61,7 @@ namespace lexer
 					{
 						m_position.column = static_cast<int>(iss.tellg()) - data.size();
 					}
-					if (data[data.size() - 1] == ';')
+					if (data.size() != 1 && data[data.size() - 1] == ';')
 					{
 						AddNewToken(data.substr(0, data.size() - 1));
 						m_position.column += data.size() - 1;
