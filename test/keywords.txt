@@ -1,3 +1,0 @@
-// keyword are only `int` and `float`
-int a;
-float b;
