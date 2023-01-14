@@ -196,4 +196,63 @@ TEST_CASE("Tests for single usage lexems")
 			}
 		}
 	}
+
+	SECTION("Testing identifiers")
+	{
+		GIVEN("Lexer dialog, input and output")
+		{
+			std::stringstream input;
+			std::stringstream output;
+
+			auto lexerDialog = std::make_unique<LexerDialog>(output);
+
+			WHEN("In lexer goes right identifier with only letters")
+			{
+				input << "id";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of identifier")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "identifier (id) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes right identifier with letters and numbers")
+			{
+				input << "id123";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of identifier")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "identifier (id123) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes identifier with only numbers")
+			{
+				input << "123";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of number")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (123) [1, 0]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+		}
+	}
 }
