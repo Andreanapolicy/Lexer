@@ -17,3 +17,5 @@ add_executable(
         src/utils/LexerDialog/LexerDialog.cpp
         src/utils/LexerDialog/LexerDialog.h
 )
+
+add_executable(test test/test.cpp)
