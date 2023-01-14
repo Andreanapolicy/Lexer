@@ -63,7 +63,7 @@ namespace
     bool checkNumber(const std::string& data)
     {
         bool isFloat = false;
-        bool isNotRegularNotation = false;
+		bool isHexadecimal = false;
 
         if (data.empty())
         {
@@ -77,7 +77,7 @@ namespace
                 continue;
             }
 
-            if (isNotRegularNotation && std::isalpha(data[index]))
+            if ((isHexadecimal && std::isalpha(data[index]) && (data[index] <= 'f' && data[index] >= 'a' || data[index] <= 'F' && data[index] >= 'A')))
             {
                 continue;
             }
@@ -95,7 +95,7 @@ namespace
 
             if (data.size() > 2 && index == 1 && data[0] == '0' && (data[1] == 'x' || data[1] == 'b' || data[1] == 'e'))
             {
-				isNotRegularNotation = true;
+				isHexadecimal = data[1] == 'x';
                 continue;
             }
 
