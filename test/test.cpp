@@ -401,4 +401,87 @@ TEST_CASE("Tests for single usage lexems")
 			}
 		}
 	}
+
+	SECTION("Testing expressions")
+	{
+		GIVEN("Lexer dialog, input and output")
+		{
+			std::stringstream input;
+			std::stringstream output;
+
+			auto lexerDialog = std::make_unique<LexerDialog>(output);
+
+			WHEN("In lexer goes int + int")
+			{
+				input << "1 + 1";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of 3 tokens")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (1) [1, 0]" << std::endl;
+					intendedOutput << "plus (+) [1, 2]" << std::endl;
+					intendedOutput << "number (1) [1, 4]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes int * int")
+			{
+				input << "1 * 1";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of 3 tokens")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (1) [1, 0]" << std::endl;
+					intendedOutput << "multiplication (*) [1, 2]" << std::endl;
+					intendedOutput << "number (1) [1, 4]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes int / int")
+			{
+				input << "1 / 1";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of 3 tokens")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (1) [1, 0]" << std::endl;
+					intendedOutput << "division (/) [1, 2]" << std::endl;
+					intendedOutput << "number (1) [1, 4]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+
+			WHEN("In lexer goes int - int")
+			{
+				input << "1 - 1";
+				auto lexer = std::make_unique<lexer::Lexer>(input);
+				lexer->Process();
+
+				THEN("List of token will be consist of 3 tokens")
+				{
+					std::stringstream intendedOutput;
+					intendedOutput << "number (1) [1, 0]" << std::endl;
+					intendedOutput << "minus (-) [1, 2]" << std::endl;
+					intendedOutput << "number (1) [1, 4]" << std::endl;
+
+					lexerDialog->OutputTokens(lexer->GetAllTokens());
+					REQUIRE(output.str() == intendedOutput.str());
+				}
+			}
+		}
+	}
 }
