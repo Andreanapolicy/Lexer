@@ -12,3 +12,17 @@ b = a + ( b * a );
     float a;
     b = a + ( b * a );
 }
+
+while ( const auto index = 0; index = index + 1 )
+{
+    for ( auto indexI = 0; index < b )
+    switch ( indexI )
+        case : 0
+            indexI = index + 1;
+            break;
+        case : 1
+            indexI = index + 2;
+            break;
+        default
+            return;
+}

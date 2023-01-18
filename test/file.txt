@@ -1,6 +1,4 @@
-a = ( a + 1 );
-b = "string";
-int a;
-float a;
-float a;
-b = a + ( b * a );
+while ( int a = 0; a + 0 )
+{
+
+}

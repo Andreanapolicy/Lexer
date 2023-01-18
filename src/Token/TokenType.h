@@ -17,5 +17,6 @@ namespace token::type
         ASSIGNMENT,
         STRING,
         END,
+		LOGICAL,
     };
 }

@@ -27,6 +27,8 @@ namespace
                 return token::type::TokenType::MULTIPLICATION;
             case lexem::LexemType::DIVISION:
                 return token::type::TokenType::DIVISION;
+            case lexem::LexemType::LOGICAL:
+                return token::type::TokenType::LOGICAL;
             default:
                 throw std::runtime_error("Error, cannot associate lexem type to token type");
         }

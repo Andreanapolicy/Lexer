@@ -5,9 +5,15 @@
 
 namespace
 {
-    bool checkKeyword(const std::string& data)
+	const std::vector<std::string> keywords = {
+		"int", "float", "while", "const", "auto",
+		"if", "for", "bool", "false", "true", "return",
+		"break", "continue", "else", "switch", "case", "default",
+	};
+
+	bool checkKeyword(const std::string& data)
     {
-        return data == "int" || data == "float";
+        return std::find(keywords.begin(), keywords.end(),data) != keywords.end();
     }
 
     bool checkIdentifier(const std::string& data)
@@ -49,16 +55,15 @@ namespace
         return data == "+";
     }
 
-    bool checkSeparator(const std::string& data)
+	const std::vector<std::string> separators = {
+		";", "(", ")", "{", "}",
+		"[", "]", "::", ":",
+	};
+
+	bool checkSeparator(const std::string& data)
     {
-        return data == ";"
-			|| data == "["
-			|| data == "]"
-			|| data == "("
-			|| data == ")"
-			|| data == "{"
-			|| data == "}";
-    }
+		return std::find(separators.begin(), separators.end(),data) != separators.end();
+	}
 
     bool checkNumber(const std::string& data)
     {
@@ -114,6 +119,16 @@ namespace
     {
 		return data == "//";
     }
+
+	const std::vector<std::string> logicals = {
+		">", "<", "!=", "==", ">=",
+		"<=", "&&", "||",
+	};
+
+    bool checkLogical(const std::string& data)
+    {
+		return std::find(logicals.begin(), logicals.end(),data) != logicals.end();
+    }
 }
 
 namespace lexem
@@ -132,6 +147,7 @@ namespace lexem
 		{LexemType::DIVISION, checkDivision},
 		{LexemType::STRING, checkString},
 		{LexemType::COMMENT, checkComment},
+		{LexemType::LOGICAL, checkLogical},
     };
 
     LexemType GetLexemType(const std::string& data)

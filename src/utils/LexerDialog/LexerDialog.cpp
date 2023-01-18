@@ -26,6 +26,8 @@ namespace
 				return "multiplication";
 			case token::type::TokenType::DIVISION:
 				return "division";
+			case token::type::TokenType::LOGICAL:
+				return "logical";
 			default:
 				return "Please, dont call the police. I dont want to go back to jail.";
 		}
